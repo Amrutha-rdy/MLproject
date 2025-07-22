@@ -7,8 +7,14 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
 from src.components.data_transformation import DataTransformation, DataTransformationConfig
+from src.components.model_trainer import Modeltrainer,Modeltrainer_config
+
+
 #to know where to store the train ,test,raw data we need input locations
 #ataclass no need for init constructor if only variables are used
+
+
+
 
 @dataclass
 class DataIngestionConfig:
@@ -57,5 +63,10 @@ class DataIngestion:
 if __name__=="__main__":
     obj= DataIngestion()
     train_data,test_data = obj.initiate_data_ingestion()
+
     data_transformation = DataTransformation()
-    data_transformation.inititate_data_transformation(train_data,test_data)
+    train_arr ,test_arr,_ = data_transformation.inititate_data_transformation(train_data,test_data)
+
+    model_trainer = Modeltrainer()
+    print(model_trainer.initiate_modeltrainer(train_arr,test_arr))
+    
