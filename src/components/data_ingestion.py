@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation, DataTransformationConfig
 #to know where to store the train ,test,raw data we need input locations
 #ataclass no need for init constructor if only variables are used
 
@@ -55,4 +56,6 @@ class DataIngestion:
 #to check 
 if __name__=="__main__":
     obj= DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data,test_data = obj.initiate_data_ingestion()
+    data_transformation = DataTransformation()
+    data_transformation.inititate_data_transformation(train_data,test_data)
