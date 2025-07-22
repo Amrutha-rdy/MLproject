@@ -6,6 +6,7 @@ import pandas as pd
 import dill
 #dill is to create a pickle file
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 def save_object(file_path,obj):
     try:
@@ -19,11 +20,18 @@ def save_object(file_path,obj):
         raise CustomException(e,sys)
     
 
-def evaluate_model(X_train,y_train,X_test,y_test,models):
+def evaluate_model(X_train,y_train,X_test,y_test,models,param):
     try:
         report={}
         for i in range(len(models)):
             model = list(models.values())[i]
+            model_name = list(models.keys())[i]
+            model_params = param[model_name]
+
+            gs = GridSearchCV(model,model_params,cv=3)
+            gs.fit(X_train,y_train)
+
+            model.set_params(**gs.best_params_)
             model.fit(X_train,y_train)
             y_train_pred = model.predict(X_train)
             y_test_pred = model.predict(X_test)

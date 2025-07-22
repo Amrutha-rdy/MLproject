@@ -42,9 +42,37 @@ class Modeltrainer:
                 "Decision Tree Regressor":DecisionTreeRegressor(),
                 "K-Neighbours Regressor": KNeighborsRegressor()
             }
+            params={
+                "Random Forest": {'n_estimators': [8, 16, 32, 64, 128, 256]},
+
+                "XGB Regressor" : {
+                    'learning_rate':[.1,.01,0.05,0.001],
+                    'n_estimators':[8,16,24,32,40,64,128,256]
+                },
+                "CatBoost Regressor": {
+                    'depth': [6,8,10],
+                    'learning_rate':[0.01,0.05,0.1],
+                    'iterations':[30,40,50,100]
+                },
+                "Linear Regressor": {},
+            
+                "Gradient Boosting Regressor":{
+                    'learning_rate':[.1,.01,0.05,0.001],
+                    'subsample':[0.6,0.65,0.7,0.75,0.8,0.85],
+                    'n_estimators':[8,16,24,32,40,64,128,256]
+                },
+            
+               "AdaBoost Regressor": {
+                   'learning_rate':[.1,.01,0.05,0.001],
+                    'n_estimators':[8,16,24,32,40,64,128,256]
+               },
+               "Decision Tree Regressor": {'criterion':['squared_error','friedman_mse','absolute_error']},
+               "K-Neighbours Regressor": {'n_neighbors':[5,6,7,9,11]}
+                
+            }
 
             model_report :dict =evaluate_model(X_train=X_train,y_train=y_train,
-                                                X_test=X_test,y_test=y_test, models=models)
+                                                X_test=X_test,y_test=y_test, models=models,param=params)
 
             #To get best model score
             best_model_score = max(sorted(model_report.values()))
